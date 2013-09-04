@@ -1,0 +1,96 @@
+* {
+  box-sizing: border-box;
+  outline: 0;
+}
+html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+  margin: 0;
+  font: 14px Helvetica, Arial, sans-serif;
+}
+a {
+  color: #00B7FF;
+}
+.flash-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100%;
+}
+.flash {
+  width: 100%;
+  padding: 10px;
+  border-width: 0;
+  border-bottom-width: 1px;
+  border-style: solid;
+  border-color: rgba(0, 0, 0, 0.2);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.flash.notice {
+  color: #c09853;
+  border-color: #fbeed5;
+  background-color: #fcf8e3;
+}
+.flash.error {
+  color: #b94a48;
+  border-color: #eed3d7;
+  background-color: #f2dede;
+}
+.flash.success {
+  color: #468847;
+  border-color: #d6e9c6;
+  background-color: #dff0d8;
+}
+.flash.info {
+  color: #3a87ad;
+  border-color: #bce8f1;
+  background-color: #d9edf7;
+}
+.page {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.chat {
+  position: absolute;
+  bottom: 100px;
+  width: 100%;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+  padding: 10px;
+}
+.chat p {
+  font-size: 14px;
+  font-weight: 400;
+  padding: 0;
+  margin: 2px 0;
+}
+.chat strong {
+  font-weight: bold;
+}
+.prompt {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+}
+.prompt .name {
+  width: 15%;
+  padding: 5px 10px;
+  margin: 0 0 10px;
+  box-shadow: 0;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}
+.prompt .message {
+  width: 100%;
+  padding: 5px 10px;
+  margin: 0;
+  box-shadow: 0;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+}

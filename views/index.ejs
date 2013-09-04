@@ -1,11 +1,17 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
-  </body>
+    <head>
+        <meta charset='UTF-8'>
+        <title><%= title %></title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+    </head>
+    <body>
+        <div class="flash-container" id="flash_container"></div>
+        <div class="page" id="page"></div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script type="text/javascript" src="/javascripts/lib/jquery-1.10.2.min.js"></script>
+        <script type="text/javascript" src="/javascripts/lib/underscore-min.js"></script>
+        <script type="text/javascript" src="/javascripts/init.js"></script>
+    </body>
 </html>
