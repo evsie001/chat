@@ -56,7 +56,7 @@ function init () {
 
     DOMS.socket.on('connecting', function () {
         console.log('Connecting...');
-        DOMS.loading_flash = new Flash("Connecting...", "info");
+        DOMS.loading_flash = DOMS.loading_flash || new Flash("Connecting...", "info");
     });
 
     DOMS.socket.on('connect', function () {
