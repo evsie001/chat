@@ -69,6 +69,12 @@ function init () {
         DOMS.chat_int = new ChatInt($page);
         DOMS.prompt_int = new PromptInt($page);
     });
+
+    DOMS.socket.on('connect_error', function () {
+        DOMS.loading_flash.remove();
+
+        new Flash("Connect Error", "error", true);
+    });
 }
 
 $(document).ready(init);
