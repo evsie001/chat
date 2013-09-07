@@ -5,14 +5,18 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
+var UsersManager = require('./UsersManager');
 
 var app = express();
 
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+io.configure(function () {
+    io.set("transports", ["xhr-polling"]);
+    io.set("polling duration", 10);
+});
 
 // all environments
 app.set('port', process.env.PORT || 3000);
@@ -32,7 +36,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+
+var users = new UsersManager(io.sockets);
 
 server.listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
@@ -40,8 +45,12 @@ server.listen(app.get('port'), function(){
 
 io.sockets.on('connection', function (socket) {
 
-    socket.on('post msg', function (data) {
-        io.sockets.emit('get msg', { msg: data.msg, user: data.user });
+    socket.on('user_up', function (data) {
+        users.addUser(data.name, data.id, socket);
+    });
+
+    socket.on('message_up', function (data) {
+        io.sockets.emit('message_down', { message: data.message, name: data.name });
     });
 
     socket.on('post typing', function (data) {
