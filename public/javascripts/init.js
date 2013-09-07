@@ -102,11 +102,16 @@ function ChatManager () {
 ////////////////////////////
 function UserIntf ($page) {
     var self = this,
-        $root = $('<div class="abs-center"></div>'),
+        $root = $('<div class="user"></div>'),
         $input = $('<input placeholder="name">'),
         $btn = $('<button>Enter</button>');
 
     $btn.bind("click", submit);
+    $btn.hover(function () {
+        $('body').addClass('colors');
+    }, function () {
+        $('body').removeClass('colors');
+    });
 
     $root.append($input, $btn);
     $page.html($root);
@@ -114,7 +119,11 @@ function UserIntf ($page) {
     function submit (event) {
         var name = $input.val();
 
-        $(self).trigger('new_user', name);
+        if (name !== "") {
+            $(self).trigger('new_user', name);
+        } else {
+            new Flash("You have no name?", "error", true);
+        }
     }
 
     this.remove = function () {

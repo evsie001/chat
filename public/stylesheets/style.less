@@ -18,6 +18,16 @@ body {
     margin: 0;
 
     font: 16px Helvetica, Arial, sans-serif;
+
+    background-color: white;
+
+    -webkit-transition: background-color .5s;
+    -moz-transition: background-color .5s;
+    transition: background-color .5s;
+
+    &.colors {
+        background-color: #194BA3;
+    }
 }
 
 a, .link {
@@ -73,17 +83,42 @@ a, .link {
     height: 100%;
 }
 
-.abs-center {
+.user {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
 
-    width: 175px;
+    width: 100%;
     height: 25px;
 
     margin: auto;
+
+    text-align: center;
+
+    input {
+        padding: 5px;
+        border: 1px solid fade(black, 20%);
+        background-color: white;
+    }
+
+    button {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+
+        padding: 5px;
+
+        border-radius: 0;
+        border: 1px solid fade(black, 20%);
+
+        background: none;
+        background-color: white;
+
+        color: fade(black, 65%);
+
+        cursor: pointer;
+    }
 }
 
 .chat {
@@ -122,5 +157,19 @@ a, .link {
     width: 100%;
     height: 50px;
 
-    box-shadow: 1px 0 10px 0 fade(black, 20%);
+    padding: 0;
+
+    // box-shadow: 1px 0 10px 0 fade(black, 20%);
+
+    textarea {
+        width: 100%;
+        height: 100%;
+        
+        margin: 0;
+        padding: 5px;
+
+        border: 1px solid fade(black, 20%);
+
+        background-color: transparent;
+    }
 }
