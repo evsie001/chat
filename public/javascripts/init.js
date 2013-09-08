@@ -79,19 +79,23 @@ function ChatManager () {
     chat_intf = new ChatIntf(DOMS.$page);
     message_intf = new MessageIntf(DOMS.$page);
 
-    DOMS.socket.on('message_down', chat_intf.insertMessage);
+    DOMS.socket.on('message_down', receiveMessage);
 
     $(message_intf).bind('message_entered', sendMessage);
 
     function sendMessage (event, message) {
         var data = {
-            name: DOMS.user_manager.getName(),
+            id: DOMS.user_manager.getId(),
             message: clean(message)
         };
         DOMS.socket.emit('message_up', data);
     }
     function clean (message) {
         return message.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
+    }
+
+    function receiveMessage (data) {
+        chat_intf.insertMessage(data);
     }
 }
 
@@ -140,10 +144,11 @@ function ChatIntf ($page) {
         height = $page.innerHeight() - 50;
     });
 
-    var message_html = '<p><strong><%= name %></strong> <%= message %></p>',
+    var message_html = '<p><strong><%= name %></strong> <%= message %><span class="timestamp"><%= timestamp %></span></p>',
         messageTemplate = _.template(message_html);
 
     this.insertMessage = function (data) {
+        data.timestamp = moment().format("hh:mm:ss a");
         $(messageTemplate(data)).appendTo($root);
         $root.scrollTop(9999999999);
     };
@@ -166,8 +171,6 @@ function MessageIntf ($page) {
             $message.val('').focus();
 
             $(self).trigger('message_entered', message);
-        } else {
-            // DOMS.socket.emit('typing_up');
         }
     });
 }
