@@ -80,6 +80,7 @@ function ChatManager () {
     message_intf = new MessageIntf(DOMS.$page);
 
     DOMS.socket.on('message_down', receiveMessage);
+    DOMS.socket.on('user_joined', userJoined);
 
     $(message_intf).bind('message_entered', sendMessage);
 
@@ -95,8 +96,49 @@ function ChatManager () {
     }
 
     function receiveMessage (data) {
+        DOMS.notifications_manager.createNotification({
+            title: data.name,
+            content: data.message
+        });
         chat_intf.insertMessage(data);
     }
+    function userJoined (data) {
+        var info = {
+            name: "System",
+            message: data.name + " joined."
+        };
+        chat_intf.insertMessage(info);
+    }
+}
+function NotificationsManager () {
+
+    function isAble () {
+        return window.webkitNotifications;
+    }
+    function isAllowed () {
+        return window.webkitNotifications.checkPermission() === 0;
+    }
+
+    this.requestPermission = function () {
+        if (!isAble()) {
+            new Flash("Your browser does not support Notifications.", 'error', true);
+        } else if (isAble() && !isAllowed()) {
+            window.webkitNotifications.requestPermission();
+        }
+    }
+
+    this.createNotification = function (options) {
+        if (isAble() && isAllowed()) {
+            notification = window.webkitNotifications.createNotification(options.image, options.title, options.content);
+            notification.ondisplay = options.onDisplay;
+            notification.onerror = options.onError;
+            notification.onclose = options.onClose;
+            notification.onclick = options.onClick;
+            if (!DOMS.window_focus) notification.show();
+        } else {
+            requestPermission();
+        }
+    };
 }
 
 ////////////////////////////////
@@ -121,6 +163,8 @@ function UserIntf ($page) {
     $page.html($root);
 
     function submit (event) {
+        DOMS.notifications_manager.requestPermission();
+
         var name = $input.val();
 
         if (name !== "") {
@@ -181,9 +225,16 @@ function MessageIntf ($page) {
 //                             //
 ////////////////////////////////
 function init () {
+    DOMS.window_focus = true;
+    $(window).focus(function(event) {
+        DOMS.window_focus = true;
+    }).blur(function(event) {
+        DOMS.window_focus = false;
+    });
 
     DOMS.$page = $('#page');
     DOMS.socket = io.connect('http://' + window.location.hostname);
+    DOMS.notifications_manager = new NotificationsManager();
 
     DOMS.user_manager = new UserManager();
     $(DOMS.user_manager).bind('finished', function () {
@@ -195,19 +246,19 @@ function init () {
     });
     DOMS.socket.on('connect', function () {
         DOMS.loading_flash.remove();
-        new Flash("Connected!", "notice", true);
+        new Flash("Connected!", "success", true);
     });
     DOMS.socket.on('connect_error', function () {
         DOMS.loading_flash.remove();
-        new Flash("Connect Error", "error", true);
+        new Flash("Connection Error.", "error", true);
     });
     DOMS.socket.on('disconnect', function () {
         DOMS.loading_flash.remove();
-        new Flash("You've been disconnected.", "error", true);
+        new Flash("Disconnected.", "error", true);
     });
 
     DOMS.socket.on('user_joined', function (data) {
-        new Flash(data.name + " joined.", "notice", true);
+        new Flash(data.name + " joined.", "info", true);
     });
 }
 $(document).ready(init);
