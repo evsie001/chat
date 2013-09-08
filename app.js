@@ -16,7 +16,7 @@ var io = require('socket.io').listen(server);
 io.configure(function () {
     io.set("transports", ["xhr-polling"]);
     io.set("polling duration", 10);
-    io.set("log level", 2);
+    // io.set("log level", 2);
 });
 
 // all environments
@@ -52,7 +52,7 @@ io.sockets.on('connection', function (socket) {
 
     socket.on('message_up', function (data) {
         var user = users.findUserById(data.id);
-        
+
         data.name = user.getName();
 
         io.sockets.emit('message_down', data);

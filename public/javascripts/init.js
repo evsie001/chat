@@ -94,13 +94,16 @@ function ChatManager () {
     function clean (message) {
         return message.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;').replace(/'/g, '&#039;');
     }
+    function unclean (message) {
+        return message.replace(/\&amp;/g, '&').replace(/\&lt;/g, '<').replace(/\&quot;/g, '"').replace(/\&#039;/g, "'");
+    }
 
     function receiveMessage (data) {
         DOMS.notifications_manager.createNotification({
             title: data.name,
-            content: data.message
+            content: unclean(data.message)
         });
-        chat_intf.insertMessage(data);
+        chat_intf.insertMessage({name: data.name, message: processMessage(data.message)});
     }
     function userJoined (data) {
         var info = {
@@ -108,6 +111,23 @@ function ChatManager () {
             message: data.name + " joined."
         };
         chat_intf.insertMessage(info);
+    }
+
+    function processMessage (message) {
+        var out;
+        out = processLinks(message);
+        console.log(out);
+        return out;
+    }
+    function processLinks (message) {
+        var out = URI.withinString(message, function(url) {
+            return '<a href="' + url + '" target="_blank">' + url + '</a>';
+        });
+        console.log(out);
+        return out;
+    }
+    function processImages (message) {
+        // Find images and replace them with <img>s.
     }
 }
 function NotificationsManager () {
@@ -203,12 +223,11 @@ function ChatIntf ($page) {
         height = $page.innerHeight() - 50;
     });
 
-    var message_html = '<p><strong><%= name %></strong> <%= message %><span class="timestamp"><%= timestamp %></span></p>',
-        messageTemplate = _.template(message_html);
-
     this.insertMessage = function (data) {
-        data.timestamp = moment().format("hh:mm:ss a");
-        $(messageTemplate(data)).appendTo($root);
+        
+        var $message = $('<p><strong>' + data.name + '</strong> ' + data.message + '<span class="timestamp">' + moment().format("hh:mm:ss a") + '</span></p>');
+
+        $message.appendTo($root);
         $root.scrollTop(9999999999);
     };
 }
