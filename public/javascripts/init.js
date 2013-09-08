@@ -125,13 +125,15 @@ function NotificationsManager () {
         return window.webkitNotifications.checkPermission() === 2;
     }
 
-    this.requestPermission = function () {
+    function requestPermission () {
         if (!isAble()) {
             new Flash("Your browser does not support Notifications.", 'error', true);
         } else if (isAble() && isNotAllowed()) {
             window.webkitNotifications.requestPermission();
         }
-    };
+    }
+
+    this.requestPermission = requestPermission;
 
     this.createNotification = function (options) {
         var notification;
