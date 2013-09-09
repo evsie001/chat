@@ -116,14 +116,12 @@ function ChatManager () {
     function processMessage (message) {
         var out;
         out = processLinks(message);
-        console.log(out);
         return out;
     }
     function processLinks (message) {
         var out = URI.withinString(message, function(url) {
             return '<a href="' + url + '" target="_blank">' + url + '</a>';
         });
-        console.log(out);
         return out;
     }
     function processImages (message) {
