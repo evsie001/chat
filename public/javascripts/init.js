@@ -175,6 +175,32 @@ function NotificationsManager () {
         }
     };
 }
+function TitleManager () {
+    var count = 0;
+
+    DOMS.socket.on('message_down', increase);
+    DOMS.socket.on('user_joined', increase);
+
+    $(window).focus(reset);
+
+    function increase () {
+        if (!DOMS.window_focus) {
+            count++;
+            update();
+        }
+    }
+    function reset () {
+        count = 0;
+        update();
+    }
+    function update () {
+        var out = "Chat.";
+        if (count > 0) {
+            out = '(' + count + ') ' + out;
+        }
+        $('title').text(out);
+    }
+}
 
 ////////////////////////////////
 //                           //
@@ -269,6 +295,7 @@ function init () {
     DOMS.$page = $('#page');
     DOMS.socket = io.connect('http://' + window.location.hostname);
     DOMS.notifications_manager = new NotificationsManager();
+    DOMS.title_manager = new TitleManager();
 
     DOMS.user_manager = new UserManager();
     $(DOMS.user_manager).bind('finished', function () {
