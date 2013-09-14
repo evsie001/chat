@@ -124,6 +124,10 @@ a,
   right: 0;
   font-size: 0.8em;
 }
+.chat img {
+  max-height: 200px;
+  vertical-align: top;
+}
 .prompt {
   position: fixed;
   bottom: 0;

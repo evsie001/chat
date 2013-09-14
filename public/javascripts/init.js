@@ -120,12 +120,14 @@ function ChatManager () {
     }
     function processLinks (message) {
         var out = URI.withinString(message, function(url) {
-            return '<a href="' + url + '" target="_blank">' + url + '</a>';
+            var test = (/(\.jpg|\.png|\.gif)$/gi).test(url);
+            if (test) {
+                return '<img src="' + url + '">';
+            } else {
+                return '<a href="' + url + '" target="_blank">' + url + '</a>';
+            }
         });
         return out;
-    }
-    function processImages (message) {
-        // Find images and replace them with <img>s.
     }
 }
 function NotificationsManager () {
