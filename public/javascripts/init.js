@@ -122,7 +122,7 @@ function ChatManager () {
         var out = URI.withinString(message, function(url) {
             var test = (/(\.jpg|\.png|\.gif)$/gi).test(url);
             if (test) {
-                return '<img src="' + url + '">';
+                return '<a href="' + url + '" target="_blank"><img src="' + url + '"></a>';
             } else {
                 return '<a href="' + url + '" target="_blank">' + url + '</a>';
             }
