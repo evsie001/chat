@@ -4,5 +4,5 @@
  */
 
 exports.index = function(req, res){
-    res.render('index', { title: 'Domsbay.be' });
+    res.render('index', { title: 'Chat.' });
 };
