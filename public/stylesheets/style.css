@@ -113,12 +113,17 @@ a,
 .chat p:nth-of-type(2n) {
   background-color: rgba(0, 0, 0, 0.1);
 }
-.chat strong {
+.chat .name {
   display: inline-block;
+  width: 75px;
   margin-right: 10px;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  vertical-align: bottom;
 }
-.chat span {
+.chat .timestamp {
   position: absolute;
   bottom: 0;
   right: 0;

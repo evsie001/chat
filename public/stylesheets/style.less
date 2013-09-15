@@ -146,15 +146,22 @@ a, .link {
         }
     }
 
-    strong {
+    .name {
         display: inline-block;
 
+        width: 75px;
         margin-right: 10px;
 
         font-weight: bold;
+
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+
+        vertical-align: bottom;
     }
 
-    span {
+    .timestamp {
         position: absolute;
         bottom: 0;
         right: 0;

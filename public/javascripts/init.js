@@ -251,7 +251,7 @@ function ChatIntf ($page) {
 
     this.insertMessage = function (data) {
         
-        var $message = $('<p><strong>' + data.name + '</strong> ' + data.message + '<span class="timestamp">' + moment().format("hh:mm:ss a") + '</span></p>');
+        var $message = $('<p><span class="name">' + data.name + '</span>' + data.message + '<span class="timestamp">' + moment().format("hh:mm:ss a") + '</span></p>');
 
         $message.appendTo($root);
         $root.scrollTop(9999999999);
