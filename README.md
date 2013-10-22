@@ -2,6 +2,10 @@
 
 This simple, custom, chat application uses Node.js and Socket.io for instant chat. Can be used by teams, friends, or anyone else who needs to communicate quickly and easily.
 
+## Usage
+
+[chat.domsbay.be](http://chat.domsbay.be)
+
 ## Features
 
 - WebKit Notifications
@@ -15,12 +19,6 @@ This simple, custom, chat application uses Node.js and Socket.io for instant cha
 - Private, 1-on-1 Chat
 - Database/LocalStorage Backing
 - User Accounts
-
-## Usage
-
-You can check out a preview at [chat.domsbay.be](http://chat.domsbay.be).
-
-To run your own, just pull down the repo and throw it up on the host of your choice ([Heroku](http://heroku.com)).
 
 ## Contributing
 
